@@ -23,13 +23,13 @@ class Client(object):
     def _handle_error(self, r):
         status_code = r.status_code
         if status_code == 400: # Bad request
-            raise BitacorasBadRequest()
+            raise BitacorasBadRequest(r.text)
         elif status_code == 401: # Not Authorized
-            raise BitacorasNotAuthorized()
+            raise BitacorasNotAuthorized(r.text)
         elif status_code == 404: # Not Found
-            raise BitacorasNotFound()
+            raise BitacorasNotFound(r.text)
         elif status_code == 500: # Internal Server Error
-            raise BitacorasInternalServerError()
+            raise BitacorasInternalServerError(r.text)
 
     def _make_request(self, url, params):
         r = requests.post(url, params)
